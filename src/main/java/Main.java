@@ -1,30 +1,24 @@
-import model.*;
-import controller.*;
+import database.StudentDatabaseManager;
+import model.Student;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
-        List<Student> students = new ArrayList<>();
-        students.add(StudentCreator.createStudent("Микита", "Помазан", "Максимович", Sex.MALE, "1"));
-        students.add(StudentCreator.createStudent("Марія", "Петренко", "Анатоліївна", Sex.FEMALE, "2"));
+        StudentDatabaseManager manager = new StudentDatabaseManager();
 
-        Human departmentHead = new Human("Михаїл", "Джонсон", "Якович", Sex.MALE);
+        int searchMonth = 2;
 
-        List<Group> groups = new ArrayList<>();
-        groups.add(GroupCreator.createGroup("Група А", departmentHead, students));
+        List<Student> students = manager.getStudentsByBirthMonth(searchMonth);
 
-        List<Department> departments = new ArrayList<>();
-        departments.add(new Department("Комп'ютерні науки", departmentHead, groups));
-
-        Human facultyHead = new Human("Олена", "Шевченко", "Іванівна", Sex.FEMALE);
-        List<Faculty> faculties = new ArrayList<>();
-        faculties.add(FacultyCreator.createFaculty("ІТ", facultyHead, departments));
-
-        Human universityHead = new Human("Оксана", "Коваленко", "Миколаївна", Sex.FEMALE);
-        University university = UniversityCreator.createUniversity("Дніпровська політехніка", universityHead, faculties);
-
-        System.out.println(university);
+        if (students.isEmpty()) {
+            System.out.println("Немає студентів, які народились у цьому місяці.");
+        } else {
+            System.out.println("Студенти, які народились у місяці " + searchMonth + ":");
+            for (Student student : students) {
+                System.out.println("\t" + student);
+            }
+        }
     }
 }
