@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class University {
     private String name;
@@ -26,21 +27,17 @@ public class University {
     }
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Університет: ").append(name).append(", очолює: ").append(head.toString()).append("\n");
-        for (Faculty faculty : faculties) {
-            sb.append("  Факультет: ").append(faculty.getName()).append(", очолює: ").append(faculty.getHead().toString()).append("\n");
-            for (Department department : faculty.getDepartments()) {
-                sb.append("    Кафедра: ").append(department.getName()).append(", очолює: ").append(department.getHead().toString()).append("\n");
-                for (Group group : department.getGroups()) {
-                    sb.append("      Група: ").append(group.getName()).append(", очолює: ").append(group.getHead().toString()).append("\n");
-                    for (Student student : group.getStudents()) {
-                        sb.append("        Студент: ").append(student.toString()).append("\n");
-                    }
-                }
-            }
-        }
-        return sb.toString();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        University that = (University) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(head, that.head) &&
+                Objects.equals(faculties, that.faculties);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, head, faculties);
     }
 }

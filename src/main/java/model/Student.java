@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Student extends Human {
     private String studentId;
 
@@ -10,6 +12,20 @@ public class Student extends Human {
 
     public String getStudentId() {
         return studentId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Student student = (Student) o;
+        return Objects.equals(studentId, student.studentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), studentId);
     }
 
     @Override
